@@ -12,22 +12,19 @@
         </div>
 
         <!-- Mobile Menu Button -->
-        <button
-            class="lg:hidden btn btn-square btn-ghost"
-            @click="toggleMenu"
-        >
+        <button class="lg:hidden btn btn-square btn-ghost" @click="toggleMenu">
           <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              class="w-6 h-6"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            class="w-6 h-6"
           >
             <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 6h16M4 12h16m-7 6h7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"
             />
           </svg>
         </button>
@@ -53,17 +50,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-
-const unusedVar = "I am not used";
+import { ref } from 'vue'
 
 // Reactive state for the menu
-const isMenuOpen = ref(false);
+const isMenuOpen = ref(false)
 
 // Toggle menu visibility
 const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value;
-};
+  isMenuOpen.value = !isMenuOpen.value
+}
 </script>
 
 <style scoped>
