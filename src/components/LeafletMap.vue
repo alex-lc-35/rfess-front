@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import L, { Map } from 'leaflet'
-import { comcomCoordinates } from '@/coordinates/comcom' // Chemin vers le fichier
+import { comcomData } from '@/coordinates/comcom' // Chemin vers le fichier
 
 onMounted(() => {
   // Initialisation de la carte
@@ -19,16 +19,17 @@ onMounted(() => {
   }).addTo(map)
 
   // Ajouter le polygone GeoJSON
-  const geoJsonLayer = L.geoJSON(comcomCoordinates, {
-    style: {
-      color: '#FF0000', // Couleur rouge pour le contour
-      weight: 2,
-      opacity: 0.8,
+  L.geoJSON(comcomData, {
+    style: { color: '#FF0000', weight: 2, opacity: 0.8 },
+    onEachFeature: (feature, layer) => {
+      if (feature.properties?.name) {
+        layer.bindPopup(`Commune : ${feature.properties.name}`)
+      }
     },
   }).addTo(map)
 
   // Centrer et ajuster le zoom pour englober tout le polygone
-  map.fitBounds(geoJsonLayer.getBounds())
+  map.fitBounds(L.geoJSON(comcomData).getBounds())
 })
 </script>
 

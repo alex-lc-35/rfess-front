@@ -1,14 +1,20 @@
-import type { Polygon } from 'geojson'
+import type { FeatureCollection, Geometry, Feature } from 'geojson'
+import communes from '@/assets/data/communes.json'
+import communesCoordinates from '@/assets/data/communesCoordinates.json'
 
-export const comcomCoordinates: Polygon = {
-  type: 'Polygon',
-  coordinates: [
-    [
-      [-1.507, 47.96],
-      [-1.495, 47.96],
-      [-1.495, 47.97],
-      [-1.507, 47.97],
-      [-1.507, 47.96], // Fermeture
-    ],
-  ],
+export const comcomData: FeatureCollection = {
+  type: 'FeatureCollection',
+  features: communes.map((commune) => {
+    const contourData = communesCoordinates.find((coordinate) => coordinate.code === commune.code)
+
+    if (contourData && contourData.contour) {
+      return {
+        type: 'Feature',
+        properties: { name: commune.name },
+        geometry: contourData.contour,
+      } as Feature<Geometry, { name: string }>
+    }
+
+    throw new Error(`Contour manquant pour le code ${commune.code}`)
+  }),
 }

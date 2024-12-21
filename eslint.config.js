@@ -31,6 +31,12 @@ export default [
       '@typescript-eslint/no-unused-vars': 'error',
       'vue/multi-word-component-names': 'off',
       'prettier/prettier': 'warn', // Ajoute Prettier comme règle ESLint
+      '@typescript-eslint/no-explicit-any': [
+        'error',
+        {
+          ignoreRestArgs: true, // Autoriser `any` dans certains contextes
+        },
+      ],
     },
   },
 ]
