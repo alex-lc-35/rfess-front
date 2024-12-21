@@ -6,18 +6,29 @@
 
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import L from 'leaflet'
+import L, { Map } from 'leaflet'
+import { comcomCoordinates } from '@/coordinates/comcom' // Chemin vers le fichier
 
 onMounted(() => {
-  const map = L.map('map').setView([48.8566, 2.3522], 13) // Coordonnées de Paris
+  // Initialisation de la carte
+  const map: Map = L.map('map')
 
+  // Ajouter les tuiles OpenStreetMap
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution:
-      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    attribution: '&copy; OpenStreetMap contributors',
   }).addTo(map)
 
-  // Exemple : Ajouter un marqueur
-  L.marker([48.8566, 2.3522]).addTo(map).bindPopup('Hello Paris!').openPopup()
+  // Ajouter le polygone GeoJSON
+  const geoJsonLayer = L.geoJSON(comcomCoordinates, {
+    style: {
+      color: '#FF0000', // Couleur rouge pour le contour
+      weight: 2,
+      opacity: 0.8,
+    },
+  }).addTo(map)
+
+  // Centrer et ajuster le zoom pour englober tout le polygone
+  map.fitBounds(geoJsonLayer.getBounds())
 })
 </script>
 
