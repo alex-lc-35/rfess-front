@@ -55,6 +55,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+const unusedVar = "I am not used";
+
 // Reactive state for the menu
 const isMenuOpen = ref(false);
 
