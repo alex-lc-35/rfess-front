@@ -1,10 +1,82 @@
 [
   {
-    "code": "001",
-    "name": "Commune 1"
+    "code": "35002",
+    "name": "Amanlis",
+    "population": 1811
   },
   {
-    "code": "003",
-    "name": "Commune 1"
+    "code": "35005",
+    "name": "Arbrissel",
+    "population": 548
+  },
+  {
+    "code": "35028",
+    "name": "Boistrudan",
+    "population": 1010
+  },
+  {
+    "code": "35041",
+    "name": "Brie",
+    "population": 3944
+  },
+  {
+    "code": "35077",
+    "name": "Chelun",
+    "population": 366
+  },
+  {
+    "code": "35082",
+    "name": "Coësmes",
+    "population": 1676
+  },
+  {
+    "code": "35103",
+    "name": "Eancé",
+    "population": 526
+  },
+  {
+    "code": "35108",
+    "name": "Essé",
+    "population": 1526
+  },
+  {
+    "code": "35114",
+    "name": "Forges-la-Forêt",
+    "population": 308
+  },
+  {
+    "code": "35136",
+    "name": "Janzé",
+    "population": 8722
+  },
+  {
+    "code": "35333",
+    "name": "Le Theil-de-Bretagne",
+    "population": 1318
+  },
+  {
+    "code": "35165",
+    "name": "Marcillé-Robert",
+    "population": 1276
+  },
+  {
+    "code": "35167",
+    "name": "Martigné-Ferchaud",
+    "population": 2964
+  },
+  {
+    "code": "35239",
+    "name": "Retiers",
+    "population": 4457
+  },
+  {
+    "code": "35262",
+    "name": "Sainte-Colombe",
+    "population": 1010
+  },
+  {
+    "code": "35335",
+    "name": "Thourie",
+    "population": 1000
   }
 ]

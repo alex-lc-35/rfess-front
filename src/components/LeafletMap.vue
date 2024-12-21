@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import L, { Map } from 'leaflet'
-import { comcomData } from '@/coordinates/comcom' // Chemin vers le fichier
+import { comcomData } from '@/modules/communes' // Chemin vers le fichier
 
 onMounted(() => {
   // Initialisation de la carte
