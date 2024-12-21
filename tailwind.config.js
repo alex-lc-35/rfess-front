@@ -9,5 +9,3 @@ module.exports = {
     themes: ["light", "dark", "cupcake"], // Ajouter ou personnaliser des thèmes ici
   },
 };
-
-

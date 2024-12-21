@@ -1,19 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 // Définir vos composants pour les routes
-import Home from '@/pages/Home.vue';
-import About from '@/pages/About.vue';
+import HomePage from '@/pages/HomePage.vue';
+import AboutPage from '@/pages/AboutPage.vue';
 
 const routes = [
     {
         path: '/',
         name: 'Home',
-        component: Home,
+        component: HomePage,
     },
     {
         path: '/about',
         name: 'About',
-        component: About,
+        component: AboutPage,
     },
 ];
 
