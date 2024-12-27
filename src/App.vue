@@ -7,8 +7,9 @@
 
         <!-- Desktop Navigation -->
         <div class="hidden lg:flex space-x-4">
-          <router-link to="/" class="btn btn-ghost">Home</router-link>
-          <router-link to="/about" class="btn btn-ghost">About</router-link>
+          <router-link to="/" class="btn btn-ghost">Accueil</router-link>
+          <router-link to="/carte" class="btn btn-ghost">Carte</router-link>
+          <router-link to="/test" class="btn btn-ghost">Test</router-link>
         </div>
 
         <!-- Mobile Menu Button -->
@@ -50,17 +51,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+  import { ref } from 'vue'
 
-// Reactive state for the menu
-const isMenuOpen = ref(false)
+  // Reactive state for the menu
+  const isMenuOpen = ref(false)
 
-// Toggle menu visibility
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value
-}
+  // Toggle menu visibility
+  const toggleMenu = () => {
+    isMenuOpen.value = !isMenuOpen.value
+  }
 </script>
 
 <style scoped>
-/* Ajoutez des styles spécifiques ici si nécessaire */
+  /* Ajoutez des styles spécifiques ici si nécessaire */
 </style>

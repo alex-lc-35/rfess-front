@@ -30,11 +30,45 @@ export default [
       'vue/script-setup-uses-vars': 'error',
       '@typescript-eslint/no-unused-vars': 'error',
       'vue/multi-word-component-names': 'off',
-      'prettier/prettier': 'warn', // Ajoute Prettier comme règle ESLint
-      '@typescript-eslint/no-explicit-any': [
-        'error',
+      'prettier/prettier': [
+        'warn',
         {
-          ignoreRestArgs: true, // Autoriser `any` dans certains contextes
+          htmlWhitespaceSensitivity: 'ignore',
+        },
+      ],
+      '@typescript-eslint/no-explicit-any': 'off', // Désactiver les erreurs pour "any"
+      'vue/html-closing-bracket-spacing': [
+        'warn',
+        {
+          startTag: 'never',
+          endTag: 'never',
+          selfClosingTag: 'always',
+        },
+      ],
+      'vue/html-indent': [
+        'warn',
+        2,
+        {
+          attribute: 1,
+          baseIndent: 1,
+          alignAttributesVertically: true,
+        },
+      ],
+      'vue/max-attributes-per-line': [
+        'warn',
+        {
+          singleline: 3,
+          multiline: {
+            max: 1,
+          },
+        },
+      ],
+      'no-multiple-empty-lines': [
+        'warn',
+        {
+          max: 1,
+          maxEOF: 0,
+          maxBOF: 0,
         },
       ],
     },
