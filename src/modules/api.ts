@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from 'axios'
+import axios, { AxiosRequestConfig, AxiosError } from 'axios'
 
 const api = axios.create({
   baseURL: 'http://localhost:8000/api', // Remplacez par l'URL de votre backend
@@ -7,26 +7,60 @@ const api = axios.create({
   },
 })
 
+// Gestion des erreurs
+const handleError = (error: AxiosError) => {
+  if (error.response) {
+    // Erreur HTTP (codes de réponse 4xx ou 5xx)
+    console.error(`HTTP Error: ${error.response.status} - ${error.response.statusText}`)
+    console.error('Details:', error.response.data)
+    throw new Error(`HTTP Error: ${error.response.statusText}`)
+  } else if (error.request) {
+    // Pas de réponse du serveur
+    console.error('No response received:', error.request)
+    throw new Error('No response from server')
+  } else {
+    // Erreur inconnue
+    console.error('Error:', error.message)
+    throw new Error(error.message)
+  }
+}
+
 // Fonction générique pour les requêtes GET
 export const get = async (route: string, config?: AxiosRequestConfig) => {
-  const response = await api.get(route, config)
-  return response.data
+  try {
+    const response = await api.get(route, config)
+    return response.data
+  } catch (error) {
+    handleError(error as AxiosError)
+  }
 }
 
 // Fonction générique pour les requêtes POST
 export const post = async (route: string, data: unknown, config?: AxiosRequestConfig) => {
-  const response = await api.post(route, data, config)
-  return response.data
+  try {
+    const response = await api.post(route, data, config)
+    return response.data
+  } catch (error) {
+    handleError(error as AxiosError)
+  }
 }
 
 // Fonction générique pour les requêtes PUT
 export const put = async (route: string, data: unknown, config?: AxiosRequestConfig) => {
-  const response = await api.put(route, data, config)
-  return response.data
+  try {
+    const response = await api.put(route, data, config)
+    return response.data
+  } catch (error) {
+    handleError(error as AxiosError)
+  }
 }
 
 // Fonction générique pour les requêtes DELETE
 export const del = async (route: string, config?: AxiosRequestConfig) => {
-  const response = await api.delete(route, config)
-  return response.data
+  try {
+    const response = await api.delete(route, config)
+    return response.data
+  } catch (error) {
+    handleError(error as AxiosError)
+  }
 }

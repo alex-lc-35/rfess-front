@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, defineProps, defineEmits } from 'vue'
+  import { ref, defineProps, defineEmits, watch } from 'vue'
 
   // Définir les props
   const { selectedCommune } = defineProps<{
@@ -55,10 +55,19 @@
   }
 
   const selectSuggestion = (suggestion: any) => {
-    query.value = suggestion.properties.label
+    query.value = suggestion.properties.name
     suggestions.value = []
     emit('addressSelected', suggestion)
   }
+
+  watch(
+    () => selectedCommune.code,
+    () => {
+      query.value = ''
+      suggestions.value = []
+      emit('addressSelected', null)
+    }
+  )
 </script>
 
 <!--<style scoped>
