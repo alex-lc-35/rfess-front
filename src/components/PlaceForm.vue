@@ -1,9 +1,7 @@
 <template>
   <div v-if="isInit" class="container mx-auto mt-4">
-    <h1 class="text-4xl font-bold">TEST</h1>
-
     <!-- FORM -->
-    <div id="place-form" class="max-w-md mx-auto p-4 bg-white shadow rounded-lg">
+    <div v-if="isInit" id="place-form" class="max-w-md mx-auto p-4 bg-white shadow rounded-lg">
       <h2 class="text-2xl font-bold mb-4">Ajouter un lieu</h2>
       <div class="space-y-4">
         <!--error -->
@@ -52,7 +50,7 @@
       </div>
     </div>
     <!-- TEST -->
-    <div class="grid grid-cols-1 lg:grid-cols-3">
+    <!--    <div class="grid grid-cols-1 lg:grid-cols-3">
       <div>
         <p>selectedCommune</p>
         <pre>{{ selectedCommune }}</pre>
@@ -65,12 +63,12 @@
         <p>place</p>
         <pre>{{ place }}</pre>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue'
+  import { onMounted, ref, defineEmits } from 'vue'
   import { post } from '@/modules/api'
   import { getCommunesList } from '@/modules/communes'
   import { Place, mapToPlace } from '@/modules/place'
@@ -84,6 +82,7 @@
   const place = ref<Place>(mapToPlace())
   const errorForm = ref<string | null>()
 
+  const emit = defineEmits(['placeAdded'])
   onMounted(() => {
     initForm()
     isInit.value = true
@@ -109,6 +108,7 @@
     try {
       await post('/places', place.value)
       initForm()
+      emit('placeAdded')
     } catch (error) {
       errorForm.value = "Erreur d'enregistrement"
       console.error('Error adding place:', error)

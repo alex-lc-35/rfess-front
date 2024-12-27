@@ -4,7 +4,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/pages/HomePage.vue'
 import MapPage from '@/pages/MapPage.vue'
 import TestPage from '@/pages/TestPage.vue'
-import FormPage from '@/pages/FormPage.vue'
 
 const routes = [
   {
@@ -21,11 +20,6 @@ const routes = [
     path: '/test',
     name: 'TestPage',
     component: TestPage,
-  },
-  {
-    path: '/form',
-    name: 'FormPage',
-    component: FormPage,
   },
 ]
 

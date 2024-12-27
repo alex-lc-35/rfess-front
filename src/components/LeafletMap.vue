@@ -21,11 +21,6 @@
     // Ajouter le polygone GeoJSON
     L.geoJSON(communesContour, {
       style: { color: '#FF0000', weight: 2, opacity: 0.8 },
-      onEachFeature: (feature, layer) => {
-        if (feature.properties?.name) {
-          layer.bindPopup(`Commune : ${feature.properties.name}`)
-        }
-      },
     }).addTo(map)
 
     // Centrer et ajuster le zoom pour englober tout le polygone

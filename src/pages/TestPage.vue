@@ -1,18 +1,25 @@
 <template>
-  <div>
-    <AddressInput :selectedCommune="selectedCommune" @addressSelected="handleAddressSelected" />
-    <p v-if="selectedAddress" class="mt-4">Adresse sélectionnée : {{ selectedAddress }}</p>
+  <div class="container mx-auto mt-4">
+    <LeafletMap />
+
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
-  import AddressInput from '@/components/AddressInput.vue'
+  import { get } from '@/modules/api'
+  import { onMounted, ref } from 'vue'
+  import { Place, mapToPlace, mapToGeoJsonPoint } from '@/modules/place'
+  import { Feature, Point } from 'geojson'
+  import LeafletMap from '@/components/LeafletMap.vue'
 
-  const selectedCommune = ref({ code: '35002', name: 'Amanlis' })
-  const selectedAddress = ref('')
+  // Typage de la collection `places` comme tableau de `Place`
+  const places = ref<Place[]>([])
+  const geoPlaces = ref<Feature<Point>[]>([])
 
-  const handleAddressSelected = (address: string) => {
-    selectedAddress.value = address
-  }
+  onMounted(async () => {
+    const response = await get('/places')
+    places.value = response.map((item: Partial<Place>) => mapToPlace(item))
+    geoPlaces.value = places.value.map((item) => mapToGeoJsonPoint(item))
+  })
 </script>
+
