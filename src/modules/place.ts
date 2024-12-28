@@ -1,4 +1,5 @@
 import { Feature, Point } from 'geojson'
+import { get } from '@/modules/api'
 
 export interface Place {
   name: string
@@ -9,7 +10,15 @@ export interface Place {
   description: string
 }
 
-export const mapToPlace = (data: Partial<Place> = {}): Place => {
+// Fonction principale pour obtenir les données GeoJSON
+export const getPlacesGeoJson = async () => {
+  const res = await get('/places') // Supposé retourner un tableau
+  const places = res.map(mapToPlace) // Conversion des données en objets Place
+  return places.map(mapToGeoJsonPoint) // Conversion en GeoJSON
+}
+
+// Fonction pour convertir un objet brut en Place
+export const mapToPlace = (data: Partial<Place>): Place => {
   return {
     name: data.name || '',
     city: data.city || '',
@@ -20,22 +29,14 @@ export const mapToPlace = (data: Partial<Place> = {}): Place => {
   }
 }
 
-export const mapToGeoJsonPoint = (place: Place): Feature<Point> => {
+// Fonction pour convertir un objet Place en GeoJSON
+export const mapToGeoJsonPoint = (place: Place) => {
   if (place.latitude === null || place.longitude === null) {
     throw new Error('Invalid Place: latitude and longitude are required to create a GeoJSON point')
   }
-
   return {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [place.longitude, place.latitude],
-    },
-    properties: {
-      name: place.name,
-      city: place.city,
-      address: place.address,
-      description: place.description,
-    },
+    lat: place.latitude,
+    lng: place.longitude,
+    description: place.description,
   }
 }

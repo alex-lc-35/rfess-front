@@ -16,6 +16,7 @@
     "core-js": "^3.8.3",
     "daisyui": "^4.12.22",
     "leaflet": "^1.9.4",
+    "pinia": "^2.3.0",
     "vue": "^3.2.13",
     "vue-class-component": "^8.0.0-0",
     "vue-router": "^4.5.0"
