@@ -1,40 +1,18 @@
 <template>
   <div class="min-h-screen flex flex-col">
     <nav class="bg-base-100 shadow-md">
-      <div class="container mx-auto flex justify-between items-center py-4 px-6">
+      <div class="container mx-auto flex justify-between items-center pt-1 pb-2 px-2">
         <!-- App Title -->
-        <router-link to="/" class="text-xl font-bold">My App</router-link>
+        <router-link to="/" class="text-xl font-bold">
+          <div>Roche aux Fées</div>
+          <div class="text-sm">écologique, sociale et solidaire</div>
+        </router-link>
 
         <!-- Desktop Navigation -->
-        <div class="hidden lg:flex space-x-4">
-          <router-link to="/" class="btn btn-ghost">Accueil</router-link>
-          <router-link to="/carte" class="btn btn-ghost">Carte</router-link>
-          <router-link to="/test" class="btn btn-ghost">Test</router-link>
-        </div>
+        <DesktopNavigation />
 
-        <!-- Mobile Menu Button -->
-        <button class="lg:hidden btn btn-square btn-ghost" @click="toggleMenu">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            class="w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16m-7 6h7"
-            />
-          </svg>
-        </button>
-      </div>
-
-      <!-- Mobile Navigation -->
-      <div v-if="isMenuOpen" class="lg:hidden">
-        <router-link to="/" class="block py-2 px-4 text-sm">Home</router-link>
-        <router-link to="/about" class="block py-2 px-4 text-sm">About</router-link>
+        <!-- Mobile Navigation -->
+        <MobileNavigation />
       </div>
     </nav>
 
@@ -52,6 +30,8 @@
 
 <script setup lang="ts">
   import { ref } from 'vue'
+  import DesktopNavigation from '@/components/DesktopNavigation.vue'
+  import MobileNavigation from '@/components/MobileNavigation.vue'
 
   // Reactive state for the menu
   const isMenuOpen = ref(false)
