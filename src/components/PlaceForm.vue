@@ -1,7 +1,28 @@
 <template>
   <div v-if="isInit" class="container mx-auto mt-4">
     <!-- FORM -->
-    <div v-if="isInit" id="place-form" class="max-w-md mx-auto p-4 bg-white shadow rounded-lg">
+    <div
+      v-if="isInit"
+      id="place-form"
+      class="max-w-md mx-auto p-4 bg-white shadow rounded-lg relative"
+    >
+      <!-- CLOSE BTN -->
+      <button class="btn btn-square btn-outline absolute right-2" @click="emit('close')">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </button>
       <h2 class="text-2xl font-bold mb-4">Ajouter un lieu</h2>
       <div class="space-y-4">
         <!--error -->
@@ -79,16 +100,16 @@
 
   const selectedCommune = ref()
   const selectedAddress = ref()
-  const place = ref<Place>(mapToPlace())
+  const place = ref<Place>(mapToPlace({}))
   const errorForm = ref<string | null>()
 
-  const emit = defineEmits(['placeAdded'])
+  const emit = defineEmits(['placeAdded', 'close'])
   onMounted(() => {
     initForm()
     isInit.value = true
   })
   const initForm = () => {
-    place.value = mapToPlace()
+    place.value = mapToPlace({})
     selectedCommune.value = { code: '', name: '' }
     errorForm.value = null
   }

@@ -1,4 +1,3 @@
-import { Feature, Point } from 'geojson'
 import { get } from '@/modules/api'
 
 export interface Place {
@@ -12,9 +11,9 @@ export interface Place {
 
 // Fonction principale pour obtenir les données GeoJSON
 export const getPlacesGeoJson = async () => {
-  const res = await get('/places') // Supposé retourner un tableau
-  const places = res.map(mapToPlace) // Conversion des données en objets Place
-  return places.map(mapToGeoJsonPoint) // Conversion en GeoJSON
+  const res = await get('/places')
+  const places = res.map(mapToPlace)
+  return places.map(mapToGeoJsonPoint)
 }
 
 // Fonction pour convertir un objet brut en Place
