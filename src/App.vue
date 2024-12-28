@@ -39,7 +39,7 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="flex-grow">
+    <main class="flex-grow bg-gray-300">
       <router-view />
     </main>
 

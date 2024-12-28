@@ -17,8 +17,12 @@
     </div>
 
     <!-- FORM -->
-    <div v-if="showFormAddedPlaceForm" class="absolute inset-0 z-20 bg-white flex">
-      <place-form @place-added="placeAdded" @close="showFormAddedPlaceForm = false" />
+    <div v-if="showFormAddedPlaceForm" class="absolute inset-0 z-20">
+      <place-form
+        class="h-full w-full bg-white md:h-auto md:w-auto md:bg-transparent md:mt-4"
+        @place-added="placeAdded"
+        @close="showFormAddedPlaceForm = false"
+      />
     </div>
   </div>
 </template>
@@ -32,9 +36,6 @@
   const mapStore = useMapStore()
   const places = ref([])
   const showFormAddedPlaceForm = ref(false)
-  const init = () => {
-    mapStore.initializeMap('leaflet-map')
-  }
   const placeAdded = async () => {
     await fetchPlaces()
     showFormAddedPlaceForm.value = false
@@ -45,7 +46,8 @@
   }
 
   onMounted(async () => {
-    init()
+    console.log("onMounted")
+    mapStore.initializeMap('leaflet-map')
     await fetchPlaces()
   })
 </script>

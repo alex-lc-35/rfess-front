@@ -14,7 +14,10 @@ export const useMapStore = defineStore('mapStore', {
   }),
   actions: {
     initializeMap(mapElementId: string) {
-      if (this.map) return
+      if (this.map) {
+        this.map.remove() // Supprime l'ancienne instance de la carte
+        this.map = null
+      }
 
       this.map = L.map(mapElementId).setView(this.options.center, this.options.zoom)
 

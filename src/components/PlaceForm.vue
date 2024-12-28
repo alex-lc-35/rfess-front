@@ -1,8 +1,12 @@
 <template>
-  <div v-if="isInit" class="container mx-auto mt-4">
+  <div class="w-full h-full">
+    <!-- LOAD -->
+    <div v-if="load" class="">
+      <span class="loading loading-spinner loading-xs"></span>
+    </div>
     <!-- FORM -->
     <div
-      v-if="isInit"
+      v-if="isInit && !load"
       id="place-form"
       class="max-w-md mx-auto p-4 bg-white shadow rounded-lg relative"
     >
@@ -43,7 +47,7 @@
           </select>
         </div>
         <!-- address | message | submit -->
-        <section v-if="place.name && selectedCommune.code">
+        <section v-if="selectedCommune.code">
           <!--address -->
           <div>
             <label for="address" class="block text-sm font-medium mb-1">Adresse</label>
@@ -96,6 +100,7 @@
   import AddressInput from '@/components/AddressInput.vue'
 
   const isInit = ref(false)
+  const load = ref(false)
   const communes = getCommunesList()
 
   const selectedCommune = ref()
@@ -117,6 +122,7 @@
     selectedAddress.value = address
   }
   const submitForm = async () => {
+    load.value = true
     if (selectedCommune.value) {
       place.value.city = selectedCommune.value.name
     }
@@ -130,6 +136,7 @@
       await post('/places', place.value)
       initForm()
       emit('placeAdded')
+      // load.value = false
     } catch (error) {
       errorForm.value = "Erreur d'enregistrement"
       console.error('Error adding place:', error)
