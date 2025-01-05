@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: . # Le répertoire de base du projet
+      dockerfile: Dockerfile # Utilise le Dockerfile spécifié
+    ports:
+      - "8201:8201" # Redirection du port 8201 local vers 8201 du conteneur
+    volumes:
+      - .:/app # Synchronisation des fichiers du projet
+      - /app/node_modules # Ne synchronise pas node_modules pour éviter les conflits
+    environment:
+      - NODE_ENV=development
+    stdin_open: true
+    tty: true
