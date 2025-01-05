@@ -2,11 +2,22 @@
   <div class="min-h-screen flex flex-col">
     <nav class="bg-base-100 shadow-md">
       <div class="container mx-auto flex justify-between items-center pt-1 pb-2 px-2">
-        <!-- App Title -->
-        <router-link to="/" class="text-xl font-bold">
-          <div>Roche aux Fées</div>
-          <div class="text-sm">écologique, sociale et solidaire</div>
-        </router-link>
+        <!-- Logo and Title -->
+        <div class="flex items-center space-x-2">
+          <router-link to="/" class="flex items-center space-x-2">
+            <!-- Logo -->
+            <img
+              src="/logo.webp"
+              alt="Logo"
+              class="w-10 h-10 rounded-full"
+            />
+            <!-- App Title -->
+            <div>
+              <div class="text-xl font-bold">Roche aux Fées</div>
+              <div class="text-sm">écologique, sociale et solidaire</div>
+            </div>
+          </router-link>
+        </div>
 
         <!-- Desktop Navigation -->
         <DesktopNavigation />
@@ -16,8 +27,9 @@
       </div>
     </nav>
 
+
     <!-- Main Content -->
-    <main class="flex-grow bg-gray-300">
+    <main class="flex-grow bg-gray-200">
       <router-view />
     </main>
 
