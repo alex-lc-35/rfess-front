@@ -1,20 +1,13 @@
-# Étape 1 : Utiliser l'image Node.js officielle
-FROM node:18-alpine
-
-# Étape 2 : Définir le répertoire de travail
+# Étape 1 : Build Vue.js avec Node.js
+FROM node:18-alpine AS builder
 WORKDIR /app
-
-# Étape 3 : Copier les fichiers nécessaires pour les dépendances
 COPY package*.json yarn.lock ./
-
-# Étape 4 : Installer les dépendances
 RUN yarn install --frozen-lockfile
-
-# Étape 5 : Copier tout le projet
 COPY . .
+RUN yarn build  # Build en mode production
 
-# Étape 6 : Exposer le port 8201
-EXPOSE 8201
-
-# Étape 7 : Lancer l'application Vue CLI
-CMD ["yarn", "serve", "--host", "0.0.0.0", "--port", "8201"]
+# Étape 2 : Servir les fichiers compilés avec Nginx
+FROM nginx:alpine
+COPY --from=builder /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

@@ -1,15 +1,10 @@
-version: '3.8'
 services:
   frontend:
     build:
-      context: . # Le répertoire de base du projet
-      dockerfile: Dockerfile # Utilise le Dockerfile spécifié
+      context: .  # Utilise le répertoire actuel
+      dockerfile: Dockerfile  # Fichier Dockerfile pour builder l'image
     ports:
-      - "8201:8201" # Redirection du port 8201 local vers 8201 du conteneur
-    volumes:
-      - .:/app # Synchronisation des fichiers du projet
-      - /app/node_modules # Ne synchronise pas node_modules pour éviter les conflits
+      - "8201:80"  # Associe le port 80 du conteneur au port 8201 de l’hôte
     environment:
-      - NODE_ENV=development
-    stdin_open: true
-    tty: true
+      - NODE_ENV=production  # Mode production
+    restart: unless-stopped  # Redémarrage automatique si le conteneur s'arrête
