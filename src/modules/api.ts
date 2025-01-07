@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosError } from 'axios'
 
 const api = axios.create({
-  baseURL: 'http://localhost:8101/api', // Remplacez par l'URL de votre backend
+  baseURL: 'http://rfess.fr/api',
   headers: {
     'Content-Type': 'application/json',
   },
