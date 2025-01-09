@@ -1,7 +1,9 @@
 import axios, { AxiosRequestConfig, AxiosError } from 'axios'
 
+console.log('API IMPORT', process.env.VUE_APP_API_BASE_URL)
+
 const api = axios.create({
-  baseURL: 'https://back.rfess.fr/api/',
+  baseURL: process.env.VUE_APP_API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
