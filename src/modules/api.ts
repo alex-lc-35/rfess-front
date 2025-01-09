@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosError } from 'axios'
 
 const api = axios.create({
-  baseURL: 'http://rfess.fr/api',
+  baseURL: 'https://back.rfess.fr/api/',
   headers: {
     'Content-Type': 'application/json',
   },
