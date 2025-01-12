@@ -15,4 +15,4 @@ services:
           cpus: "0.5"  # Limite à 50% d'un CPU pour éviter une surcharge
           memory: 256M  # Limite la mémoire à 256 Mo
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro  # Fichier de configuration Nginx personnalisé en lecture seule
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro  # Montre le fichier `nginx.conf` en lecture seule
