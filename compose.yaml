@@ -1,10 +1,18 @@
 services:
   frontend:
     build:
-      context: .  # Utilise le répertoire actuel
-      dockerfile: Dockerfile  # Fichier Dockerfile pour builder l'image
+      context: .  # Utilise le répertoire actuel pour la construction
+      dockerfile: Dockerfile  # Utilise le Dockerfile optimisé
     ports:
-      - "8201:80"  # Associe le port 80 du conteneur au port 8201 de l’hôte
+      - "8201:80"  # Expose le port 80 du conteneur sur le port 8201 de l'hôte
     environment:
-      - NODE_ENV=production  # Mode production
-    restart: unless-stopped  # Redémarrage automatique si le conteneur s'arrête
+      - NODE_ENV=production  # Indique l'environnement de production
+    restart: unless-stopped  # Redémarrage automatique en cas d'arrêt
+    container_name: rfess-front  # Nom personnalisé du conteneur
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"  # Limite à 50% d'un CPU pour éviter une surcharge
+          memory: 256M  # Limite la mémoire à 256 Mo
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro  # Fichier de configuration Nginx personnalisé en lecture seule
