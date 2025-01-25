@@ -7,7 +7,7 @@
 <script setup lang="ts">
   import { onMounted, ref } from 'vue'
   import { useMapStore } from '@/stores/mapStore'
-  import { getPlacesGeoJson } from '@/modules/place'
+  import { getPlacesGeoJson } from '@/services/placeService'
 
   const mapStore = useMapStore()
   const places = ref([])
@@ -22,7 +22,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   #map {
     height: 100%;
     width: 100%;

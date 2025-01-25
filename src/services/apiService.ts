@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig, AxiosError } from 'axios'
 
 console.log('API IMPORT', process.env.VUE_APP_API_BASE_URL)
 
-const api = axios.create({
+const apiService = axios.create({
   baseURL: process.env.VUE_APP_API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ const handleError = (error: AxiosError) => {
 // Fonction générique pour les requêtes GET
 export const get = async (route: string, config?: AxiosRequestConfig) => {
   try {
-    const response = await api.get(route, config)
+    const response = await apiService.get(route, config)
     return response.data
   } catch (error) {
     handleError(error as AxiosError)
@@ -40,7 +40,7 @@ export const get = async (route: string, config?: AxiosRequestConfig) => {
 // Fonction générique pour les requêtes POST
 export const post = async (route: string, data: unknown, config?: AxiosRequestConfig) => {
   try {
-    const response = await api.post(route, data, config)
+    const response = await apiService.post(route, data, config)
     return response.data
   } catch (error) {
     handleError(error as AxiosError)
@@ -50,7 +50,7 @@ export const post = async (route: string, data: unknown, config?: AxiosRequestCo
 // Fonction générique pour les requêtes PUT
 export const put = async (route: string, data: unknown, config?: AxiosRequestConfig) => {
   try {
-    const response = await api.put(route, data, config)
+    const response = await apiService.put(route, data, config)
     return response.data
   } catch (error) {
     handleError(error as AxiosError)
@@ -60,7 +60,7 @@ export const put = async (route: string, data: unknown, config?: AxiosRequestCon
 // Fonction générique pour les requêtes DELETE
 export const del = async (route: string, config?: AxiosRequestConfig) => {
   try {
-    const response = await api.delete(route, config)
+    const response = await apiService.delete(route, config)
     return response.data
   } catch (error) {
     handleError(error as AxiosError)

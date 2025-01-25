@@ -1,12 +1,14 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import { setupFontAwesome } from './plugins/fontawesome'
 import App from './App.vue'
 import router from './router'
 
-import './assets/app.css'
 import 'leaflet/dist/leaflet.css'
+import './assets/app.css'
 
 const app = createApp(App)
+setupFontAwesome(app)
 
 app.use(router)
 app.use(createPinia())

@@ -7,7 +7,7 @@
 <script setup lang="ts">
   import { onMounted } from 'vue'
   import L, { Map, Icon } from 'leaflet'
-  import { communesContour } from '@/modules/communes'
+  import { communesContour } from '@/services/communesService'
 
   let map: Map | null = null
 

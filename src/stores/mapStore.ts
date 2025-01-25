@@ -1,6 +1,8 @@
+/*mapStore.ts*/
 import { defineStore } from 'pinia'
 import L, { Map, TileLayer, LayerGroup, Icon } from 'leaflet'
-import { communesContour } from '@/modules/communes'
+import { communesContour } from '@/services/communesService'
+import { MapPoint } from '@/types/MapPoint'
 
 export const useMapStore = defineStore('mapStore', {
   state: () => ({
@@ -11,6 +13,8 @@ export const useMapStore = defineStore('mapStore', {
       center: [48.8566, 2.3522] as [number, number],
       zoom: 13,
     },
+    selectedPoint: null as MapPoint | null,
+    editPoint: null as MapPoint | null,
   }),
   actions: {
     initializeMap(mapElementId: string) {
@@ -37,11 +41,9 @@ export const useMapStore = defineStore('mapStore', {
       this.map.fitBounds(L.geoJSON(communesContour).getBounds())
     },
 
-    setMarkers(points: { lat: number; lng: number; description: string }[]) {
-      if (!this.map || !this.markersGroup) return
-
-      this.markersGroup.clearLayers()
-
+    // Crée et configure un marqueur pour un point donné
+    createMarker(point: MapPoint): L.Marker {
+      // On crée l'icône ici, pour éviter la duplication de code
       const placeIcon = new Icon({
         iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
         iconSize: [25, 41], // Taille de l'icône
@@ -51,10 +53,44 @@ export const useMapStore = defineStore('mapStore', {
         shadowSize: [41, 41], // Taille de l'ombre
       })
 
+      // Création du marqueur
+      const marker = L.marker([point.latitude, point.longitude], { icon: placeIcon })
+
+      // Gérer le popup
+      if (point.description) {
+        marker.bindPopup(point.description)
+      }
+
+      // Gérer l'événement clic
+      if (point.object) {
+        marker.on('click', () => {
+          this.selectedPoint = point
+        })
+      }
+
+      return marker
+    },
+
+    // Mettre à jour tous les marqueurs d'un coup
+    setMarkers(points: MapPoint[]) {
+      if (!this.map || !this.markersGroup) return
+
+      // Supprime tous les marqueurs existants
+      this.markersGroup.clearLayers()
+
+      // Pour chaque point, on crée un marqueur et on l'ajoute au groupe
       points.forEach((point) => {
-        const marker = L.marker([point.lat, point.lng], { icon: placeIcon })
-        marker.bindPopup(point.description).addTo(this.markersGroup as LayerGroup)
+        const marker = this.createMarker(point)
+        marker.addTo(this.markersGroup as LayerGroup)
       })
+    },
+
+    // Ajouter un marqueur unique
+    addMarker(point: MapPoint) {
+      if (!this.map || !this.markersGroup) return
+
+      const marker = this.createMarker(point)
+      marker.addTo(this.markersGroup as LayerGroup)
     },
   },
 })

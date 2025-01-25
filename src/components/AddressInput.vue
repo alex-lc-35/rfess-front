@@ -4,7 +4,7 @@
       id="address"
       v-model="query"
       type="text"
-      placeholder="Entrez une adresse"
+      placeholder="Commencez à saisir et sélectionner dans la liste"
       class="input input-bordered w-full"
       @input="fetchSuggestions"
     />
