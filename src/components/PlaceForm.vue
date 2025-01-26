@@ -77,7 +77,7 @@
             />
           </div>
 
-          <!--Site web -->
+          <!--          &lt;!&ndash;Site web &ndash;&gt;
           <label class="block text-sm font-medium mb-1" for="message">Site web</label>
           <input
             id="websiteUrl"
@@ -85,7 +85,7 @@
             class="input input-bordered w-full mb-1"
           />
 
-          <!--Facebook -->
+          &lt;!&ndash;Facebook &ndash;&gt;
           <label class="block text-sm font-medium mb-1" for="message">Facebook</label>
           <input
             id="facebookUrl"
@@ -93,7 +93,7 @@
             class="input input-bordered w-full mb-1"
           />
 
-          <!--Instagram -->
+          &lt;!&ndash;Instagram &ndash;&gt;
           <label class="block text-sm font-medium mb-1" for="message">Instagram</label>
           <input
             id="instagramUrl"
@@ -101,9 +101,9 @@
             class="input input-bordered w-full mb-1"
           />
 
-          <!--X-->
+          &lt;!&ndash;X&ndash;&gt;
           <label class="block text-sm font-medium mb-1" for="message">X (twitter)</label>
-          <input id="xUrl" v-model="place.xUrl" class="input input-bordered w-full mb-1" />
+          <input id="xUrl" v-model="place.xUrl" class="input input-bordered w-full mb-1" />-->
 
           <!--Submit -->
           <div class="flex justify-end">
