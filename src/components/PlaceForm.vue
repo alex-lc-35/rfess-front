@@ -38,7 +38,7 @@
 
         <!--Name -->
         <div>
-          <label class="block text-sm font-medium mb-1" for="name">Name</label>
+          <label class="block text-sm font-medium mb-1" for="name">Nom</label>
           <input id="name" v-model="place.name" type="text" class="input input-bordered w-full" />
         </div>
 
