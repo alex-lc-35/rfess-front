@@ -181,7 +181,7 @@
       initForm()
       placeStore.closForm()
     } catch (error) {
-      errorForm.value = "Erreur d'enregistrement"
+      /*      errorForm.value = "Erreur d'enregistrement"*/
       console.error('Error adding place:', error)
     } finally {
       load.value = false
