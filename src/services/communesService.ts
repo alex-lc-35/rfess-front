@@ -1,6 +1,7 @@
 import type { FeatureCollection, Geometry, Feature } from 'geojson'
 import communes from '@/assets/data/communes.json'
 import communesCoordinates from '@/assets/data/communesCoordinates.json'
+import { Commune } from '@/types/Commune'
 
 export const communesContour: FeatureCollection = {
   type: 'FeatureCollection',
@@ -26,4 +27,12 @@ export const getCommunesList = (): { code: string; name: string }[] => {
       name: commune.name,
     }))
     .sort((a, b) => a.name.localeCompare(b.name))
+}
+
+export const findCommuneByName = (name: string | null): Commune => {
+  const commune = communes.find((c) => c.name === name)
+  if (!commune) {
+    throw new Error(`Commune not found: '${name}'`)
+  }
+  return { code: commune.code, name: commune.name }
 }

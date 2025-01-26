@@ -27,9 +27,6 @@
       <router-link to="/carte" class="text-lg font-bold py-2" @click="isMenuOpen = false">
         Carte
       </router-link>
-      <router-link to="/test" class="text-lg font-bold py-2" @click="isMenuOpen = false">
-        Test
-      </router-link>
       <button class="btn btn-ghost absolute top-4 right-4" @click="isMenuOpen = false">
         Fermer
       </button>

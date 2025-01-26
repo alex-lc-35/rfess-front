@@ -1,8 +1,9 @@
+<!--placeForm.vue-->
 <template>
   <div class="w-full h-full">
     <!-- LOAD -->
-    <div v-if="load">
-      <span class="loading loading-spinner loading-xs"></span>
+    <div v-if="load" class="absolute inset-0 flex items-center justify-center bg-white/70 z-50">
+      <span class="loading loading-spinner loading-lg text-primary"></span>
     </div>
 
     <!-- FORM -->
@@ -12,7 +13,7 @@
       class="max-w-md mx-auto p-4 bg-white shadow rounded-lg relative"
     >
       <!-- CLOSE BTN -->
-      <button class="btn btn-square btn-outline absolute right-2" @click="emit('close')">
+      <button class="btn btn-square btn-outline absolute right-2" @click="placeStore.closForm()">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6"
@@ -38,9 +39,7 @@
         <!--Name -->
         <div>
           <label class="block text-sm font-medium mb-1" for="name">Name</label>
-          <input id="name"
-v-model="place.name" type="text"
-class="input input-bordered w-full" />
+          <input id="name" v-model="place.name" type="text" class="input input-bordered w-full" />
         </div>
 
         <!--Commune -->
@@ -62,6 +61,7 @@ class="input input-bordered w-full" />
             <AddressInput
               class="mb-1"
               :selectedCommune="selectedCommune"
+              :initialAddress="initialAddress"
               @addressSelected="handleAddressSelected"
             />
           </div>
@@ -116,76 +116,60 @@ class="input input-bordered w-full" />
 </template>
 
 <script setup lang="ts">
-  import { onMounted, ref, reactive, defineEmits } from 'vue'
-  import { usePlaceStore } from '@/stores/placeStore'
-  import { useMapStore } from '@/stores/mapStore'
+  import { onMounted, ref, reactive } from 'vue'
   import { Place } from '@/types/Place'
-  import { MapPoint } from '@/types/MapPoint'
-
-  import { post } from '@/services/apiService'
+  import { usePlaceStore } from '@/stores/placeStore'
   import { getCommunesList } from '@/services/communesService'
-  import { mapToPlace, mapToGeoJsonPoint } from '@/services/placeService'
-
   import AddressInput from '@/components/AddressInput.vue'
+  import { Commune } from '@/types/Commune'
 
-  // ==============================
+  // ----------------------
   // State & Refs
-  // ==============================
+  // ----------------------
   const isInit = ref(false)
   const load = ref(false)
   const errorForm = ref<string | null>(null)
 
   const communes = getCommunesList()
-  const selectedCommune = ref<{ code?: string; name?: string }>({ code: '', name: '' })
-  const selectedAddress = ref<any>() // votre type d'auto-complétion ?
+  const selectedCommune = ref<Commune>({ code: '', name: '' })
+  const selectedAddress = ref<any>()
+  const initialAddress = ref()
 
-  // Création d’un objet Place réactif à partir d’un mapping de base
+  import { mapToPlace } from '@/services/placeService'
   const place: Place = reactive(mapToPlace({}))
 
-  // Émissions d’événements
-  const emit = defineEmits(['placeAdded', 'close'])
-
-  // Accès aux stores Pinia
+  // Accès au store
   const placeStore = usePlaceStore()
-  const mapStore = useMapStore()
 
-  // ==============================
+  // ----------------------
   // Lifecycle
-  // ==============================
+  // ----------------------
   onMounted(() => {
     initForm()
     isInit.value = true
   })
 
-  // ==============================
+  // ----------------------
   // Methods
-  // ==============================
+  // ----------------------
   function initForm() {
-    // On réinitialise la commune et les erreurs
     selectedCommune.value = { code: '', name: '' }
-    errorForm.value = null
+    Object.assign(place, mapToPlace({}))
   }
 
-  /**
-   * Récupère l'adresse sélectionnée dans le composant AddressInput
-   */
   function handleAddressSelected(address: any) {
     selectedAddress.value = address
   }
 
-  /**
-   * Soumet le formulaire :
-   * - Envoie la nouvelle place à l’API
-   * - Met à jour la liste dans le store
-   * - Ajoute le marqueur sur la carte
-   * - Affiche un message ou gère les erreurs en conséquence
-   */
   async function submitForm() {
     load.value = true
 
+    // Renseigner la commune
     if (selectedCommune.value) {
       place.city = selectedCommune.value.name || ''
     }
+
+    // Renseigner l'adresse et les coordonnées
     if (selectedAddress.value) {
       place.address = selectedAddress.value.properties?.name || ''
       place.latitude = selectedAddress.value.geometry?.coordinates?.[1] || null
@@ -193,19 +177,13 @@ class="input input-bordered w-full" />
     }
 
     try {
-      const savedPlace = await post('/places', place)
-      const newPlace = mapToPlace(savedPlace)
-
-      placeStore.addPlace(newPlace)
-      mapStore.addMarker(mapToGeoJsonPoint(newPlace))
-
+      await placeStore.addPlace(place)
       initForm()
       placeStore.closForm()
     } catch (error) {
       errorForm.value = "Erreur d'enregistrement"
       console.error('Error adding place:', error)
     } finally {
-      // Quoi qu'il arrive, on arrête le chargement
       load.value = false
     }
   }

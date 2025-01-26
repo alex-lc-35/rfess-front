@@ -6,11 +6,7 @@
         <div class="flex items-center space-x-2">
           <router-link to="/" class="flex items-center space-x-2">
             <!-- Logo -->
-            <img
-              src="/logo.webp"
-              alt="Logo"
-              class="w-10 h-10 rounded-full"
-            />
+            <img src="/logo.jpeg" alt="Logo" class="w-10 h-10 rounded-full" />
             <!-- App Title -->
             <div>
               <div class="text-xl font-bold">Roche aux Fées</div>
@@ -27,16 +23,10 @@
       </div>
     </nav>
 
-
     <!-- Main Content -->
     <main class="flex-grow bg-gray-200">
       <router-view />
     </main>
-
-    <!-- Footer -->
-    <footer class="bg-base-200 p-4 text-center">
-      <p>&copy; 2024 My App. All rights reserved.</p>
-    </footer>
   </div>
 </template>
 

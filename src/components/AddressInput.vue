@@ -1,3 +1,4 @@
+<!--AddressInput.vue-->
 <template>
   <div>
     <input
@@ -23,10 +24,12 @@
 
 <script setup lang="ts">
   import { ref, defineProps, defineEmits, watch } from 'vue'
+  import { Commune } from '@/types/Commune'
 
   // Définir les props
-  const { selectedCommune } = defineProps<{
-    selectedCommune: { code: string; name: string }
+  const { selectedCommune, initialAddress } = defineProps<{
+    selectedCommune: Commune
+    initialAddress?: string
   }>()
 
   // Définir les événements
@@ -68,13 +71,12 @@
       emit('addressSelected', null)
     }
   )
-</script>
 
-<!--<style scoped>
-  .input {
-    @apply border rounded-md px-4 py-2 w-full;
-  }
-  .input-bordered {
-    @apply border-gray-300 focus:ring focus:ring-blue-300;
-  }
-</style>-->
+  watch(
+    () => initialAddress,
+    (newVal) => {
+      query.value = newVal || ''
+    },
+    { immediate: true } // pour prendre en compte la valeur dès le montage
+  )
+</script>

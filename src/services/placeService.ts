@@ -1,14 +1,18 @@
 /*placeService.ts*/
-import { get } from '@/services/apiService'
+import { get, post } from '@/services/apiService'
 import { Place } from '@/types/Place'
 import { MapPoint } from '@/types/MapPoint'
 import { createApp } from 'vue'
 import CardPlace from '@/components/CardPlace.vue'
 
-// Fonction pour récupérer les lieux depuis l'API et les convertir en GeoJSON
 export const fetchPlaces = async (): Promise<Place[]> => {
   const places: Place[] = await get('/places')
   return places.map(mapToPlace)
+}
+
+export async function createPlace(place: Place): Promise<Place> {
+  const record = await post('/places', place)
+  return mapToPlace(record)
 }
 
 // Fonction pour transformer un tableau de lieux en points GeoJSON

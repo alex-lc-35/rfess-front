@@ -1,7 +1,14 @@
 /*placeStore.ts*/
 import { defineStore } from 'pinia'
-import { mapToPlace } from '@/services/placeService'
+import {
+  fetchPlaces,
+  createPlace,
+  mapToGeoJsonPoint,
+  placesPoints,
+  mapToPlace,
+} from '@/services/placeService'
 import { Place } from '@/types/Place'
+import { useMapStore } from '@/stores/mapStore'
 
 interface MapStoreState {
   list: Place[]
@@ -16,11 +23,19 @@ export const usePlaceStore = defineStore('placeStore', {
     showForm: false,
   }),
   actions: {
-    setList(list: Place[]) {
-      this.list = list
+    async fetchPlaces() {
+      const places = await fetchPlaces()
+      this.list = places
+      const points = placesPoints(places)
+      const mapStore = useMapStore()
+      mapStore.setMarkers(points)
     },
-    addPlace(place: Place) {
-      this.list.push(place)
+    async addPlace(place: Place) {
+      const newPlace = await createPlace(place)
+      this.list.push(newPlace)
+      const point = mapToGeoJsonPoint(newPlace)
+      const mapStore = useMapStore()
+      mapStore.addMarker(point)
     },
     setPlace(place: Place) {
       this.selected = place
@@ -33,6 +48,7 @@ export const usePlaceStore = defineStore('placeStore', {
     },
     closForm() {
       this.showForm = false
+      this.selected = null
     },
   },
 })
